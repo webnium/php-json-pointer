@@ -1,5 +1,7 @@
 webnium/json-pointer
 ====================
+* master: [![Build Status](https://travis-ci.org/webnium/php-json-pointer.png?branch=master)](https://travis-ci.org/webnium/php-json-pointer)
+
 
 Usage
 ------
