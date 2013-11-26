@@ -97,3 +97,8 @@ Output:
 /~a/aaa: thrown 'Webnium\JsonPointer\Exception\SyntaxError' with message 'unknown escape sequence "~a" detected.'
 foo: thrown 'Webnium\JsonPointer\Exception\SyntaxError' with message 'pointer start with "f", "/" expected.'
 ```
+
+LICENSE
+-------
+This library destributed under MIT license.
+See LICENSE file for more infomation.
