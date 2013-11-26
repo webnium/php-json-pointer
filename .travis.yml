@@ -1,0 +1,18 @@
+language: php
+php:
+  - 5.5
+  - 5.4
+
+before_script:
+  - composer install
+  - pear install PHP_CodeSniffer
+  - pear channel-discover pear.phpmd.org
+  - pear channel-discover pear.pdepend.org
+  - pear install phpmd/PHP_PMD
+  - phpenv rehash
+
+script:
+  - phpcs --standard=phpcs.xml ./src
+  - phpmd src/ text phpmd.xml
+  - phpunit
+

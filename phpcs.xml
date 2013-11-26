@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ruleset name="Webnium">
+    <description>The Webnium coding standard.</description>
+    <!-- 2. General -->
+    <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
+    <rule ref="Generic.Strings.UnnecessaryStringConcat"/>
+    <!-- Include the whole PSR-2 standard -->
+    <rule ref="PSR2">
+        <exclude name="Generic.Files.LineLength"/>
+    </rule>
+</ruleset>

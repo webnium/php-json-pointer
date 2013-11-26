@@ -1,0 +1,22 @@
+{
+    "name": "webnium/json-pointer",
+    "description": "Accessor implement based on JSON Pointer (RFC6901)",
+    "autoload": {
+        "psr-0": {
+            "Webnium\\JsonPointer\\": "src/"
+        }
+    },
+    "require-dev": {
+        "phake/phake": "*"
+    },
+    "license": "MIT License",
+    "authors": [
+        {
+            "name": "MugeSo",
+            "email": "mugeso@mugeso.com"
+        }
+    ],
+    "require": {
+
+    }
+}
