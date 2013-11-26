@@ -1,6 +1,9 @@
 {
     "name": "webnium/json-pointer",
     "description": "Accessor implement based on JSON Pointer (RFC6901)",
+    "type": "library",
+    "keywords": ["json", "json pointer", "array", "array accessor"],
+    "homepage": "https://github.com/webnium/php-json-pointer",
     "autoload": {
         "psr-0": {
             "Webnium\\JsonPointer\\": "src/"
@@ -13,7 +16,9 @@
     "authors": [
         {
             "name": "MugeSo",
-            "email": "mugeso@mugeso.com"
+            "email": "mugeso@mugeso.com",
+            "homepage": "http://muge.so/",
+            "role": "Developer"
         }
     ],
     "require": {
