@@ -4,7 +4,7 @@ webnium/json-pointer
 Usage
 ------
 
-*** ArrayAccessor ***
+### ArrayAccessor
 ```php
 <?php
 
@@ -49,7 +49,7 @@ root: array (
 )
 ```
 
-*** Parser ***
+### Parser
 
 ```php
 <?php
