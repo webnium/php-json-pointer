@@ -1,6 +1,6 @@
 webnium/json-pointer
 ====================
-* master: [![Build Status](https://travis-ci.org/webnium/php-json-pointer.png?branch=master)](https://travis-ci.org/webnium/php-json-pointer)
+[![Coverage Status](https://coveralls.io/repos/webnium/php-json-pointer/badge.png?branch=master)](https://coveralls.io/r/webnium/php-json-pointer?branch=master) [![Build Status](https://travis-ci.org/webnium/php-json-pointer.png?branch=master)](https://travis-ci.org/webnium/php-json-pointer)
 
 
 Usage
