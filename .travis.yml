@@ -16,3 +16,5 @@ script:
   - phpmd src/ text phpmd.xml
   - phpunit
 
+after_script:
+  - php vendor/bin/coveralls -v

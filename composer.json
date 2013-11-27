@@ -10,7 +10,8 @@
         }
     },
     "require-dev": {
-        "phake/phake": "*"
+        "phake/phake": "*",
+        "satooshi/php-coveralls": "dev-master"
     },
     "license": "MIT License",
     "authors": [
