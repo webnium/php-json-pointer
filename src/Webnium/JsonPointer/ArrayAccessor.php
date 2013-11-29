@@ -14,9 +14,9 @@ class ArrayAccessor
     /**
      * constructor
      *
-     * @param Paser $parser JSON Pointer Parser
+     * @param PaserInterface $parser JSON Pointer Parser
      */
-    public function __construct(Parser $parser)
+    public function __construct(ParserInterface $parser)
     {
         $this->parser = $parser;
     }

@@ -13,29 +13,37 @@ use \PHPUnit_Framework_TestCase as TestCase;
  */
 class ArrayAccessorTest extends TestCase
 {
-    /** @ ArrayAccessor */
+    /** @var ArrayAccessor */
     private $accessor;
+
+    /** @var ParserInterface */
+    private $parser;
 
     /**
      * setup
      */
     public function setup()
     {
-        $this->accessor = new ArrayAccessor(new Parser);
+        $this->parser = Phake::mock('Webnium\JsonPointer\ParserInterface');
+        $this->accessor = new ArrayAccessor($this->parser);
     }
 
     /**
      * @test
      *
-     * @param array  $array    target array
-     * @param string $pointer  a JSON Pointer
-     * @param mixed  $expected expected value
+     * @param array $array    target array
+     * @param array $pointer  a parsed JSON Pointer
+     * @param mixed $expected expected value
      *
      * @dataProvider provideDataForCanGetPointedValueIfExistsTest
      */
-    public function canGetPointedValueIfExists($array, $pointer, $expected)
+    public function canGetPointedValueIfExists($array, $parsedPointer, $expected)
     {
+        $pointer = '/foo/bar';
+        Phake::when($this->parser)->parse($pointer)->thenReturn($parsedPointer);
         $this->assertSame($expected, $this->accessor->get($pointer, $array));
+
+        Phake::verify($this->parser)->parse($pointer);
     }
 
     /**
@@ -60,12 +68,12 @@ class ArrayAccessorTest extends TestCase
         ];
 
         return [
-            'root' => [$array, '', $array],
-            'level 1' => [$array, '/foo', 'a string'],
-            'level 2' => [$array, '/bar/buzz', 3],
-            'list item' => [$array, '/list/0', 'item1'],
-            'empty string key' => [$array, '/', 'value of empty string key'],
-            'escaped' => [$array, '/~0~1', 'value of escaped key'],
+            'root' => [$array, [], $array],
+            'level 1' => [$array, ['foo'], 'a string'],
+            'level 2' => [$array, ['bar', 'buzz'], 3],
+            'list item' => [$array, ['list', '0'], 'item1'],
+            'empty string key' => [$array, [''], 'value of empty string key'],
+            'escaped' => [$array, ['~/'], 'value of escaped key'],
         ];
     }
 
@@ -74,24 +82,11 @@ class ArrayAccessorTest extends TestCase
      *
      * @test
      * @expectedException Webnium\JsonPointer\Exception\SyntaxError
-     * @dataProvider provideInvalidPointer
      */
-    public function throwAnSytaxErrorExceptionWhenSuppliedPointerHasSyntaxError($pointer)
+    public function throwAnSytaxErrorExceptionWhenSuppliedPointerHasSyntaxError()
     {
-        $this->accessor->get($pointer, ['foo' => 1]);
-    }
-
-    /**
-     * provides invalid pointer
-     *
-     * @return array
-     */
-    public function provideInvalidPointer()
-    {
-        return [
-            'start without "/"' => ['foo'],
-            'unknown escape' => ['/~3'],
-        ];
+        Phake::when($this->parser)->parse(Phake::anyParameters())->thenThrow(new Exception\SyntaxError);
+        $this->accessor->get('foo', ['foo' => 1]);
     }
 
     /**
@@ -102,6 +97,8 @@ class ArrayAccessorTest extends TestCase
      */
     public function throwANoneExistentValueExceptionWhenPointerReferencesNoneExistentValue()
     {
+        Phake::when($this->parser)->parse('/bar/0')->thenReturn(['bar', '0']);
+
         $this->accessor->get('/bar/0', []);
     }
 
@@ -113,6 +110,8 @@ class ArrayAccessorTest extends TestCase
      */
     public function throwANoneExistentValueExceptionWhenPointerReferencesChildOfNoneArrayValue()
     {
+        Phake::when($this->parser)->parse('/bar/0')->thenReturn(['bar', '0']);
+
         $this->accessor->get('/bar/0', ['bar' => 'hoge']);
     }
 
@@ -122,12 +121,17 @@ class ArrayAccessorTest extends TestCase
      * @test
      * @dataProvider provideDataForCanSetPointedValue
      */
-    public function canSetPointedValue($pointer, $baseArray)
+    public function canSetPointedValue($parsedPointer, $baseArray)
     {
         $value = 'new value';
         $array = $baseArray;
+        $pointer = '/foo/bar';
+
+        Phake::when($this->parser)->parse($pointer)->thenReturn($parsedPointer);
 
         $this->accessor->set($pointer, $array, $value);
+
+        Phake::verify($this->parser)->parse($pointer);
 
         $this->assertSame($value, $this->accessor->get($pointer, $array));
     }
@@ -142,9 +146,9 @@ class ArrayAccessorTest extends TestCase
         $array = ['foo' => ['bar' => 12], 'list' => ['item1']];
 
         return [
-            'overwirte' => ['/foo/bar', $array], 
-            'new key' => ['/buzz', $array],
-            'deep new key' => ['/buzz/aaa', $array],
+            'overwirte' => [['foo', 'bar'], $array], 
+            'new key' => [['buzz'], $array],
+            'deep new key' => [['buzz', 'aaa'], $array],
         ];
     }
 
@@ -157,6 +161,9 @@ class ArrayAccessorTest extends TestCase
     {
         $array = ['list' => ['item1', 'item2']];
         $value = 'new value';
+
+        Phake::when($this->parser)->parse('/list/-')->thenReturn(['list', '-']);
+        Phake::when($this->parser)->parse('/list/2')->thenReturn(['list', '2']);
 
         $this->accessor->set('/list/-', $array, $value);
 

@@ -9,16 +9,10 @@ namespace Webnium\JsonPointer;
  * JSON Pointer parser
  *
  */
-class Parser
+class Parser implements ParserInterface
 {
     /**
-     * parse json pointer
-     *
-     * @param string $pointer JSON Pointer to parse
-     *
-     * @return string[]
-     * @throws Exception\SyntaxError
-     * @throws Exception\NoneExistentValue
+     * {@inheritdoc}
      */
     public function parse($pointer)
     {
