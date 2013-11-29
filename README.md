@@ -2,6 +2,24 @@ webnium/json-pointer
 ====================
 [![Coverage Status](https://coveralls.io/repos/webnium/php-json-pointer/badge.png?branch=master)](https://coveralls.io/r/webnium/php-json-pointer?branch=master) [![Build Status](https://travis-ci.org/webnium/php-json-pointer.png?branch=master)](https://travis-ci.org/webnium/php-json-pointer)
 
+Installation
+------------
+This library distributed via [packagist.org](https://packagist.org/).
+
+Execute:
+```bash
+$ wget http://getcomposer.org/composer.phar
+$ php composer.phar require webnium/json-pointer:dev-master
+```
+
+or add following to your composer.json
+```json
+{
+    "require": {
+        "webnium/json-pointer": "dev-master"
+    }
+}
+```
 
 Usage
 ------
