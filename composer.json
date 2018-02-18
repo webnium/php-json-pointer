@@ -13,7 +13,7 @@
         "phake/phake": "*",
         "satooshi/php-coveralls": "dev-master"
     },
-    "license": "MIT License",
+    "license": "MIT",
     "authors": [
         {
             "name": "MugeSo",
